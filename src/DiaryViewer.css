@@ -1,0 +1,650 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&display=swap');
+
+/* ═══════════════════════════════════════════════
+   ROOT — matches Prologue exactly
+═══════════════════════════════════════════════ */
+.dv-root {
+    position: fixed;
+    inset: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #000;
+    overflow: hidden;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    animation: dvIn 0.55s ease;
+}
+
+@keyframes dvIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   CINEMATIC OVERLAYS — same as Prologue
+═══════════════════════════════════════════════ */
+.dv-bar {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 11vh;
+    background: #000;
+    z-index: 200;
+    pointer-events: none;
+}
+
+.dv-bar-top {
+    top: 0;
+}
+
+.dv-bar-bottom {
+    bottom: 0;
+}
+
+.dv-grain {
+    position: absolute;
+    top: -10%;
+    left: -10%;
+    width: 120%;
+    height: 120%;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="n"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23n)"/%3E%3C/svg%3E');
+    opacity: 0.055;
+    z-index: 40;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+    animation: dvGrain 0.9s steps(2) infinite;
+}
+
+@keyframes dvGrain {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    20% {
+        transform: translate(-4px, 2px);
+    }
+
+    40% {
+        transform: translate(-2px, 6px);
+    }
+
+    60% {
+        transform: translate(6px, 0);
+    }
+
+    80% {
+        transform: translate(1px, 10px);
+    }
+}
+
+.dv-light-leak {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(150, 70, 15, 0.1) 0%, transparent 70%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+    z-index: 45;
+    animation: dvLeak 13s ease-in-out infinite alternate;
+}
+
+@keyframes dvLeak {
+    0% {
+        opacity: 0;
+        transform: scale(1) translate(-15%, -15%);
+    }
+
+    50% {
+        opacity: 0.35;
+        transform: scale(1.55) translate(10%, 18%);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1.25) translate(25%, -8%);
+    }
+}
+
+.dv-dust {
+    position: absolute;
+    inset: 0;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Ccircle cx="20" cy="30" r="1.5" fill="white" opacity="0.3"/%3E%3Ccircle cx="80" cy="120" r="1" fill="white" opacity="0.5"/%3E%3Ccircle cx="150" cy="50" r="2" fill="white" opacity="0.2"/%3E%3Ccircle cx="100" cy="180" r="1.5" fill="white" opacity="0.4"/%3E%3Ccircle cx="180" cy="150" r="1" fill="white" opacity="0.3"/%3E%3C/svg%3E');
+    background-size: 150px 150px;
+    animation: dvDust 26s linear infinite;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 46;
+    mix-blend-mode: screen;
+}
+
+@keyframes dvDust {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -200px -200px;
+    }
+}
+
+.dv-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(0, 0, 0, 0) 38%, rgba(0, 0, 0, 0.88) 100%);
+    pointer-events: none;
+    z-index: 48;
+}
+
+/* ═══════════════════════════════════════════════
+   CLOSE BUTTON
+═══════════════════════════════════════════════ */
+.dv-close-btn {
+    position: absolute;
+    top: 13vh;
+    right: 3vw;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: rgba(212, 175, 55, 0.65);
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.22em;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    z-index: 300;
+    transition: all 0.3s;
+}
+
+.dv-close-btn:hover {
+    color: #D4AF37;
+    border-color: #D4AF37;
+    background: rgba(212, 175, 55, 0.12);
+    box-shadow: 0 0 18px rgba(212, 175, 55, 0.28);
+}
+
+/* ═══════════════════════════════════════════════
+   SCENE WRAPPER
+═══════════════════════════════════════════════ */
+.dv-scene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    z-index: 60;
+    transition: opacity 0.5s ease;
+}
+
+.dv-scene-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.dv-scene-visible {
+    opacity: 1;
+}
+
+/* ── Header label ── */
+.dv-overline {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.34em;
+    color: #8c7e5a;
+    margin-bottom: 1.2rem;
+    opacity: 0;
+    animation: dvFadeUp 0.9s ease 0.1s forwards;
+}
+
+.dv-overline-red {
+    color: rgba(200, 55, 55, 0.85) !important;
+    animation: dvFadeUp 0.5s ease forwards, redBlink 1.8s ease 0.5s infinite !important;
+}
+
+@keyframes redBlink {
+
+    0%,
+    100% {
+        opacity: .65;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   COVER PHASE
+═══════════════════════════════════════════════ */
+.dv-cover-wrap {
+    position: relative;
+    width: min(320px, 42vw);
+    /* Desk tilt perspective */
+    transform: perspective(900px) rotateX(8deg) rotateY(-5deg);
+    box-shadow:
+        -8px 14px 40px rgba(0, 0, 0, 0.9),
+        8px 8px 22px rgba(0, 0, 0, 0.6),
+        0 0 60px rgba(0, 0, 0, 0.5);
+    animation: coverAppear 0.85s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s both;
+}
+
+@keyframes coverAppear {
+    from {
+        opacity: 0;
+        transform: perspective(900px) rotateX(16deg) rotateY(-12deg) scale(0.85);
+    }
+
+    to {
+        opacity: 1;
+        transform: perspective(900px) rotateX(8deg) rotateY(-5deg) scale(1);
+    }
+}
+
+.dv-cover-img {
+    display: block;
+    width: 100%;
+    border-radius: 2px 6px 6px 2px;
+    filter: brightness(0.8) contrast(1.1) saturate(0.82) sepia(0.08);
+}
+
+.dv-cover-inner-shadow {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 200, 100, 0.05) 0%, transparent 50%, rgba(0, 0, 0, 0.3) 100%);
+    border-radius: inherit;
+    pointer-events: none;
+}
+
+.dv-cover-label {
+    margin-top: 1.6rem;
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(212, 175, 55, 0.7);
+    letter-spacing: 0.08em;
+    text-align: center;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+}
+
+/* ═══════════════════════════════════════════════
+   BOOK SPREAD (open phases)
+   Full spread image — NOT split, NOT cropped
+═══════════════════════════════════════════════ */
+.dv-book-wrap {
+    position: relative;
+    width: min(860px, 92vw);
+    cursor: pointer;
+}
+
+.dv-book-final {
+    cursor: default;
+}
+
+.dv-book-spread {
+    display: block;
+    width: 100%;
+    max-height: 64vh;
+    object-fit: contain;
+    border-radius: 2px 4px 4px 2px;
+    /* Default state: slight desk tilt */
+    transform: perspective(1100px) rotateX(9deg) rotateY(-2deg);
+    filter: brightness(0.88) contrast(1.07) sepia(0.09);
+    box-shadow:
+        -6px 10px 32px rgba(0, 0, 0, 0.88),
+        6px 5px 18px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(0, 0, 0, 0.5);
+    user-select: none;
+    will-change: transform, filter;
+}
+
+/* ── Page 1: gently rocks in ── */
+.dv-spread-idle {
+    animation: spreadOpen 0.75s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes spreadOpen {
+    from {
+        opacity: 0;
+        transform: perspective(1100px) rotateX(22deg) rotateY(-16deg) scale(0.88);
+        filter: brightness(0.35) blur(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: perspective(1100px) rotateX(9deg) rotateY(-2deg) scale(1);
+        filter: brightness(0.88) contrast(1.07) sepia(0.09);
+    }
+}
+
+/* ── Flip frame: blurs at midpoint (JS swaps src exactly then) ──
+   Key: starts clear → blurs/rotates → clears again
+   Image src swaps at 50% (peak blur) = NO white ever visible     */
+.dv-spread-flip {
+    animation: flipFrame 0.42s cubic-bezier(0.4, 0, 0.6, 1) forwards;
+}
+
+@keyframes flipFrame {
+    0% {
+        transform: perspective(1100px) rotateX(9deg) rotateY(-2deg);
+        filter: brightness(0.88) blur(0px);
+    }
+
+    /* Rising — page lifts, darkens, blurs */
+    40% {
+        transform: perspective(1100px) rotateX(5deg) rotateY(-28deg) scaleX(0.92);
+        filter: brightness(0.45) blur(7px) contrast(1.15);
+    }
+
+    /* PEAK BLUR — JS has swapped the image src here */
+    50% {
+        transform: perspective(1100px) rotateX(4deg) rotateY(-38deg) scaleX(0.88);
+        filter: brightness(0.35) blur(10px) contrast(1.2);
+    }
+
+    /* Coming back with new image */
+    75% {
+        transform: perspective(1100px) rotateX(7deg) rotateY(-10deg) scaleX(0.97);
+        filter: brightness(0.65) blur(3px);
+    }
+
+    100% {
+        transform: perspective(1100px) rotateX(9deg) rotateY(-2deg);
+        filter: brightness(0.88) blur(0px) contrast(1.07) sepia(0.09);
+    }
+}
+
+/* ── Page 15 slam ── */
+.dv-spread-slam {
+    animation: spreadSlam 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes spreadSlam {
+    0% {
+        opacity: 0;
+        transform: perspective(1100px) rotateX(3deg) rotateY(10deg) scale(0.93);
+        filter: brightness(0.3) blur(10px);
+    }
+
+    60% {
+        transform: perspective(1100px) rotateX(11deg) rotateY(-4deg) scale(1.015);
+    }
+
+    100% {
+        opacity: 1;
+        transform: perspective(1100px) rotateX(9deg) rotateY(-2deg) scale(1);
+        filter: brightness(0.88) contrast(1.07) sepia(0.09);
+    }
+}
+
+/* Subtle page lighting overlay — simulates crease/texture */
+.dv-page-light {
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(90deg, rgba(0, 0, 0, 0.18) 0%, transparent 20%, transparent 80%, rgba(0, 0, 0, 0.12) 100%),
+        linear-gradient(180deg, rgba(255, 220, 150, 0.04) 0%, transparent 50%, rgba(0, 0, 0, 0.08) 100%);
+    pointer-events: none;
+    border-radius: inherit;
+}
+
+/* Ground shadow under book */
+.dv-book-ground-shadow {
+    position: absolute;
+    bottom: -18px;
+    left: 4%;
+    width: 92%;
+    height: 24px;
+    background: rgba(0, 0, 0, 0.55);
+    filter: blur(18px);
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ── Click hint ── */
+.dv-hint {
+    margin-top: 1.4rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.25em;
+    color: rgba(212, 175, 55, 0.55);
+    animation: hintPulse 2.2s ease infinite;
+}
+
+@keyframes hintPulse {
+
+    0%,
+    100% {
+        opacity: .3;
+    }
+
+    50% {
+        opacity: .9;
+    }
+}
+
+/* ── Flip page counter ── */
+.dv-flip-counter {
+    margin-top: 1rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    color: rgba(180, 140, 60, 0.5);
+    animation: numFlick 0.14s steps(1) infinite;
+}
+
+@keyframes numFlick {
+    50% {
+        opacity: 0.3;
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   PAGE 15 THOUGHTS
+═══════════════════════════════════════════════ */
+.dv-thoughts {
+    margin-top: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    text-align: center;
+    z-index: 70;
+}
+
+.dv-thought-main {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.96rem;
+    color: rgba(210, 195, 160, 0.78);
+    margin: 0;
+    line-height: 1.6;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.dv-thought-gold {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: #D4AF37;
+    margin: 0;
+    text-shadow: 0 3px 14px rgba(212, 175, 55, 0.35);
+}
+
+/* Fibonacci ghost stamp */
+.dv-fib-row {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.8rem;
+}
+
+.dv-fib {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: rgba(212, 175, 55, 0.14);
+    letter-spacing: 0.1em;
+    opacity: 0;
+    animation: fibIn 0.5s ease forwards;
+}
+
+.df1 {
+    animation-delay: 0.5s;
+}
+
+.df2 {
+    animation-delay: 1.0s;
+}
+
+.df3 {
+    animation-delay: 1.5s;
+}
+
+@keyframes fibIn {
+    0% {
+        opacity: 0;
+        transform: scale(1.5);
+    }
+
+    60% {
+        opacity: .15;
+        transform: scale(0.95);
+    }
+
+    100% {
+        opacity: .13;
+        transform: scale(1);
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   WORD WRITER — same as Prologue
+═══════════════════════════════════════════════ */
+.dv-word {
+    display: inline-block;
+    opacity: 0;
+    animation: dvFadeUp 0.45s ease forwards;
+}
+
+/* ═══════════════════════════════════════════════
+   SHARED
+═══════════════════════════════════════════════ */
+@keyframes dvFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ═══════════════════════════════════════════════
+   REACTIVE NOTES AREA
+   Lined paper aesthetic
+═══════════════════════════════════════════════ */
+.dv-notes-area {
+    position: absolute;
+    inset: 50px;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+    overflow: hidden;
+}
+
+.notes-bg {
+    position: absolute;
+    inset: 0;
+    background: #fdfaf0;
+    box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.notes-margin {
+    position: absolute;
+    left: 45px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(183, 143, 47, 0.2);
+}
+
+.notes-input {
+    position: relative;
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    padding-left: 20px;
+    font-family: 'IM Fell English', serif;
+    font-size: 1.25rem;
+    font-style: italic;
+    line-height: 2rem;
+    color: #2a2215;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.08) 1px, transparent 1px);
+    background-size: 100% 2rem;
+    background-attachment: local;
+    z-index: 2;
+}
+
+.notes-footer {
+    position: relative;
+    margin-top: 10px;
+    text-align: right;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+/* ═══════════════════════════════════════════════
+   DISCOVERY NOTIFICATION
+═══════════════════════════════════════════════ */
+.dv-discovery-notif {
+    position: fixed;
+    top: 12vh;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(15, 12, 10, 0.95);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(212, 175, 55, 0.1);
+    border-radius: 8px;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    z-index: 11000;
+}
+
+.notif-icon {
+    font-size: 1.5rem;
+}
+
+.notif-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.25em;
+    color: #D4AF37;
+    margin-bottom: 2px;
+}
+
+.notif-item {
+    font-family: 'IM Fell English', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    color: #fff;
+}

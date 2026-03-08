@@ -1,0 +1,432 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Patrick+Hand&display=swap');
+
+/* ════════════════════════════════════════════
+   BOARD
+════════════════════════════════════════════ */
+.eb-board {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* Cork board background */
+    background:
+        repeating-linear-gradient(45deg,
+            rgba(0, 0, 0, 0.03) 0px, rgba(0, 0, 0, 0.03) 1px,
+            transparent 1px, transparent 8px),
+        radial-gradient(ellipse at 30% 40%, #7a5c3a 0%, #5c4028 40%, #3d2810 100%);
+    overflow: hidden;
+    border: 6px solid #2a1a0a;
+    box-shadow:
+        inset 0 0 40px rgba(0, 0, 0, 0.5),
+        0 8px 32px rgba(0, 0, 0, 0.8);
+}
+
+/* Cork texture */
+.eb-cork-texture {
+    position: absolute;
+    inset: 0;
+    background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="c"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/%3E%3CfeColorMatrix type="saturate" values="0.3"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23c)" opacity="0.18"/%3E%3C/svg%3E');
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.6;
+}
+
+/* Board vignette */
+.eb-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, transparent 50%, rgba(0, 0, 0, 0.55) 100%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Board title tab */
+.eb-board-title {
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: rgba(180, 140, 60, 0.35);
+    z-index: 2;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* ════════════════════════════════════════════
+   RED THREADS
+════════════════════════════════════════════ */
+.eb-threads {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.eb-thread {
+    stroke: #c0392b;
+    stroke-width: 1.5px;
+    stroke-dasharray: 4 3;
+    opacity: 0.55;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+    animation: threadAppear 0.6s ease forwards;
+}
+
+@keyframes threadAppear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 0.55;
+    }
+}
+
+/* ════════════════════════════════════════════
+   EVIDENCE ITEMS
+════════════════════════════════════════════ */
+.eb-item {
+    position: absolute;
+    cursor: pointer;
+    z-index: 10;
+    transition: filter 0.25s, transform 0.25s;
+}
+
+.eb-item:hover {
+    z-index: 30;
+}
+
+.eb-item:hover .eb-card {
+    box-shadow:
+        0 8px 28px rgba(0, 0, 0, 0.8),
+        0 0 0 2px rgba(212, 175, 55, 0.4);
+    transform: scale(1.04);
+}
+
+.eb-item:hover .eb-hover-ring {
+    opacity: 1;
+}
+
+/* PIN HEAD */
+.eb-pin {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 0, 0, 0.5);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.7), inset 0 1px 2px rgba(255, 255, 255, 0.3);
+    margin: 0 auto -7px;
+    position: relative;
+    z-index: 3;
+    transition: transform 0.2s;
+}
+
+.eb-item:hover .eb-pin {
+    transform: scale(1.15);
+}
+
+/* CARD */
+.eb-card {
+    background: #f0e8d4;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.7), 0 1px 4px rgba(0, 0, 0, 0.5);
+    transition: box-shadow 0.25s, transform 0.25s;
+    position: relative;
+    z-index: 2;
+    overflow: hidden;
+}
+
+/* Photo card */
+.eb-type-photo .eb-card,
+.eb-type-object .eb-card,
+.eb-type-report .eb-card {
+    width: 130px;
+    padding: 6px 6px 22px;
+    background: #f5f0e4;
+}
+
+.eb-photo {
+    display: block;
+    width: 100%;
+    filter: brightness(0.9) contrast(1.05) sepia(0.1);
+}
+
+.eb-photo-label {
+    position: absolute;
+    bottom: 4px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: 0.5rem;
+    letter-spacing: 0.18em;
+    color: #5a3d1a;
+}
+
+/* Note card */
+.eb-type-note .eb-card {
+    width: 120px;
+    min-height: 100px;
+    padding: 10px;
+    background: #fdf5c8;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.eb-note-body {
+    width: 100%;
+}
+
+.eb-note-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: #7a2020;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.eb-note-text {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.7rem;
+    color: #2a1a0a;
+    margin: 0;
+    line-height: 1.5;
+}
+
+/* Hover ring */
+.eb-hover-ring {
+    position: absolute;
+    inset: -4px;
+    border: 1px solid rgba(212, 175, 55, 0.3);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+}
+
+/* ════════════════════════════════════════════
+   PIN-IN ANIMATION (new evidence arrives)
+════════════════════════════════════════════ */
+.eb-pin-in {
+    animation: pinIn 1.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes pinIn {
+    0% {
+        /* Start large in center of board (will-change: would be nice, but keeping simple) */
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(2.2) rotate(0deg);
+        filter: brightness(1.2) drop-shadow(0 0 30px rgba(212, 175, 55, 0.6));
+        z-index: 100;
+    }
+
+    30% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.8) rotate(-5deg);
+        filter: brightness(1.1) drop-shadow(0 0 20px rgba(212, 175, 55, 0.4));
+    }
+
+    /* Slide toward final board position + rotate */
+    70% {
+        transform: translate(-50%, -50%) scale(1.1) rotate(calc(var(--rot, 0deg) * 0.6));
+        filter: brightness(1) drop-shadow(0 8px 10px rgba(0, 0, 0, 0.5));
+    }
+
+    85% {
+        transform: translate(-50%, -50%) scale(0.96) rotate(calc(var(--rot, 0deg) * 1.1));
+    }
+
+    /* Stick / micro bounce */
+    100% {
+        transform: translate(-50%, -50%) scale(1) rotate(var(--rot, 0deg));
+        filter: none;
+        z-index: 10;
+    }
+}
+
+/* ════════════════════════════════════════════
+   INSPECTION OVERLAY
+════════════════════════════════════════════ */
+.eb-inspect-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    background: rgba(0, 0, 0, 0.82);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: inspectIn 0.3s ease;
+}
+
+@keyframes inspectIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.eb-inspect-modal {
+    position: relative;
+    max-width: min(780px, 90vw);
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modalPop {
+    from {
+        opacity: 0;
+        transform: scale(0.88);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.eb-inspect-close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: transparent;
+    border: 1px solid rgba(212, 175, 55, 0.35);
+    color: rgba(212, 175, 55, 0.65);
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.eb-inspect-close:hover {
+    color: #D4AF37;
+    border-color: #D4AF37;
+    background: rgba(212, 175, 55, 0.1);
+}
+
+.eb-inspect-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    letter-spacing: 0.35em;
+    color: #8c7e5a;
+}
+
+.eb-inspect-img-wrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.eb-inspect-img {
+    max-width: 100%;
+    max-height: 65vh;
+    object-fit: contain;
+    filter: brightness(0.92) contrast(1.06);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+}
+
+/* Inspect note */
+.eb-inspect-note {
+    background: #fdf5c8;
+    padding: 28px 32px;
+    min-width: 300px;
+    max-width: 500px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+}
+
+.eb-inspect-note-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: #7a2020;
+    margin-bottom: 10px;
+}
+
+.eb-inspect-note-text {
+    font-family: 'Patrick Hand', cursive;
+    font-size: 0.95rem;
+    color: #2a1a0a;
+    margin: 0;
+    line-height: 1.7;
+}
+
+/* Detective caption below image */
+.eb-inspect-notes {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: rgba(200, 185, 145, 0.7);
+    text-align: center;
+    max-width: 600px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+/* ════════════════════════════════════════════
+   HOTSPOTS (inside inspection)
+════════════════════════════════════════════ */
+.eb-hotspot {
+    position: absolute;
+    width: 38px;
+    height: 38px;
+    transform: translate(-50%, -50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    z-index: 5;
+}
+
+.eb-hotspot-ring {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(212, 175, 55, 0.7);
+    border-radius: 50%;
+    animation: hotspotPulse 2s ease infinite;
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+}
+
+@keyframes hotspotPulse {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+    }
+
+    50% {
+        transform: scale(1.15);
+        box-shadow: 0 0 0 8px rgba(212, 175, 55, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+    }
+}
+
+.eb-hotspot-label {
+    position: absolute;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Cinzel', serif;
+    font-size: 0.52rem;
+    letter-spacing: 0.18em;
+    color: rgba(212, 175, 55, 0.75);
+    white-space: nowrap;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+.eb-hotspot:hover .eb-hotspot-ring {
+    border-color: #D4AF37;
+    background: rgba(212, 175, 55, 0.1);
+}

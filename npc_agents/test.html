@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div>
+        <div id="chat-box"></div>
+        <input type="text" id="msg-box">
+        <button id="btn-submit">Send</button>
+    </div>
+
+    <script>
+        const baseURL = "http://127.0.0.1:8000";
+        const appName = "diane_park";
+        const userStr = "user_1";
+        const sessionStr = "session_1";
+
+        const sendHTTP = (urlPath, methodStr, rawDataStr) => {
+            return new Promise((res) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open(methodStr, baseURL + urlPath, true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onload = () => res(JSON.parse(xhr.responseText));
+                xhr.send(rawDataStr);
+            });
+        };
+
+        const initSession = async () => {
+            const path = `/apps/${appName}/users/${userStr}/sessions/${sessionStr}`;
+            await sendHTTP(path, "POST", "{}");
+            console.log("Session created.");
+        };
+
+        const askBot = async () => {
+            const textVal = document.getElementById("msg-box").value;
+            document.getElementById("chat-box").innerHTML += `<p>You: ${textVal}</p>`;
+
+            const bodyStr = `{"appName":"${appName}","userId":"${userStr}","sessionId":"${sessionStr}","newMessage":{"role":"user","parts":[{"text":"${textVal}"}]}}`;
+
+            const result = await sendHTTP("/run", "POST", bodyStr);
+
+            let botText = "Error";
+            let i = 0;
+            while (i < result.length) {
+                (result[i].type === "text") && (botText = result[i].text);
+                i++;
+            }
+
+            document.getElementById("chat-box").innerHTML += `<p>Bot: ${botText}</p>`;
+        };
+
+        document.getElementById("btn-submit").onclick = askBot;
+
+        initSession();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,276 @@
+.sb-container {
+    width: 100%;
+    height: 100%;
+    background: url('/public/detective_room.png') center/cover;
+    position: relative;
+    color: #e0d9c8;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 2rem 4rem;
+}
+
+/* Wood/Cork overlay blend */
+.sb-container::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-color: #110e08;
+    opacity: 0.85;
+    mix-blend-mode: multiply;
+}
+
+.sb-vignette {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(circle, transparent 20%, #000 110%);
+    pointer-events: none;
+}
+
+.sb-header {
+    position: relative;
+    z-index: 2;
+    margin-bottom: 2rem;
+}
+
+.sb-header h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: #c8b88a;
+    letter-spacing: 0.25em;
+    margin: 0;
+}
+
+.sb-divider {
+    height: 1px;
+    background: linear-gradient(90deg, rgba(200, 184, 138, 0.4) 0%, transparent 100%);
+    width: 50%;
+    margin: 0.8rem 0;
+}
+
+.sb-header p {
+    font-size: 0.9rem;
+    color: #8c8068;
+    margin: 0;
+    font-style: italic;
+}
+
+/* GRID */
+.sb-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* SUSPECT DOSSIER CARD */
+.sb-card {
+    background: linear-gradient(145deg, #1b1916, #141210);
+    border: 1px solid rgba(200, 184, 138, 0.15);
+    border-radius: 4px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8);
+    position: relative;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.sb-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(200, 184, 138, 0.3);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.95), 0 0 20px rgba(200, 184, 138, 0.05);
+}
+
+/* Dossier Header */
+.sb-card-top {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.sb-photo-wrap {
+    position: relative;
+    width: 90px;
+    height: 110px;
+    background: #000;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    border: 2px solid #ccc9b8;
+    padding: 3px;
+    background-color: #eae3d5;
+}
+
+.sb-tape {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 45px;
+    height: 15px;
+    background: rgba(230, 220, 200, 0.6);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+}
+
+.sb-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: sepia(0.3) contrast(1.2) brightness(0.85);
+}
+
+.sb-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: #4a4538;
+}
+
+.sb-info {
+    flex: 1;
+}
+
+.sb-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: #e0d9c8;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+}
+
+.sb-role {
+    font-size: 0.8rem;
+    color: #9a8f75;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: 1.2rem;
+}
+
+.sb-suspicion-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.sb-meter {
+    display: flex;
+    gap: 4px;
+}
+
+.susp-block {
+    width: 14px;
+    height: 8px;
+    background: rgba(200, 0, 0, 0.15);
+    border: 1px solid rgba(200, 0, 0, 0.3);
+}
+
+.susp-block.filled {
+    background: #a92018;
+    border-color: #ff3c3c;
+    box-shadow: 0 0 10px rgba(169, 32, 24, 0.6);
+}
+
+/* Pinned Evidence Area */
+.sb-evidence-board {
+    min-height: 140px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(200, 184, 138, 0.08);
+    position: relative;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    border-radius: 2px;
+}
+
+.sb-empty-state {
+    font-size: 0.85rem;
+    color: #5a5548;
+    font-style: italic;
+    text-align: center;
+    margin-top: 1rem;
+}
+
+/* Tags */
+.sb-tags-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+}
+
+.sb-tag {
+    background: rgba(183, 143, 47, 0.1);
+    border: 1px solid rgba(183, 143, 47, 0.4);
+    color: #b78f2f;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
+    border-radius: 2px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Sticky notes */
+.sb-sticky {
+    position: relative;
+    background: #dfd8a3;
+    color: #222;
+    padding: 0.8rem 1rem;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: 600;
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 2px;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.sb-pin-tack {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 6px;
+    height: 6px;
+    background: #c0392b;
+    border-radius: 50%;
+    box-shadow:
+        inset -1px -1px 2px rgba(0, 0, 0, 0.6),
+        1px 2px 3px rgba(0, 0, 0, 0.4);
+}
+
+/* NEW EVIDENCE FLY-IN ANIMATION */
+.pin-anim {
+    animation: casePinIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+}
+
+@keyframes casePinIn {
+    0% {
+        opacity: 0;
+        transform: scale(2) translateY(-20px) rotate(10deg);
+        filter: blur(4px);
+    }
+
+    100% {
+        opacity: 1;
+        /* Note: stickies have inline rotates, so they might snap at 100%, 
+           but forwards lets inline styles take over */
+    }
+}
+
+.sb-red-strings {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
